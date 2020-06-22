@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtu.hrms.mapper.EmpMapper">
+<!--    resultMap:自定义结果集映射规则-->
+<!--    自定义某个javaBean的封装规则
+        type 自定义规则的Java类型  id 唯一id方便使用
+-->
+    <resultMap id="MyEmp" type="com.xtu.hrms.bean.Emp">
+<!--         指定主键列的封装规则  column：指定哪一列 property：指定对于的javaBean属性-->
+<!--        id 定义主键-->
+        <id column="id" property="id"/>
+<!--        result 定义普通列封装规则-->
+        <result column="name" property="name"/>
+<!--        其他不指定的列会自动封装，推荐全写-->
+        <result column="age" property="age"/>
+        <result column="gender" property="gender"/>
+        <result column="birthday" property="birthday"/>
+        <result column="IDCard" property="IDCard"/>
+        <result column="wedlock" property="wedlock"/>
+        <result column="nationId" property="nationId"/>
+        <result column="nativePlace" property="nativePlace"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="deptId" property="deptId"/>
+        <result column="posId" property="posId"/>
+        <result column="degree" property="degree"/>
+        <result column="school" property="school"/>
+        <result column="edate" property="edate"/>
+        <result column="workState" property="workState"/>
+        <result column="workID" property="workID"/>
+        <result column="conversionTime" property="conversionTime"/>
+        <result column="workAge" property="workAge"/>
+        <result column="notWorkDate" property="notWorkDate"/>
+<!--        联合查询，级联属性封装结果集-->
+<!--        <result column="did" property="dept.id"/>-->
+<!--        <result column="deptname" property="dept.name"/>-->
+<!--        association可以指定联合的javaBean对象
+            property="dept"指定哪个属性是联合的对象
+            javaType指定这个属性对象的类型
+-->
+<!--        使用association定义关联的单个对象封装规则-->
+        <association property="dept" javaType="com.xtu.hrms.bean.Dept">
+            <id column="did" property="id"/>
+            <result column="deptname" property="name"/>
+        </association>
+        <association property="position" javaType="com.xtu.hrms.bean.Position">
+            <id column="pid" property="id"/>
+            <result column="posname" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="getEmpById" resultType="com.xtu.hrms.bean.Emp">
+        select * from emp where id=#{id}
+    </select>
+
+    <select id="getEmpAndDeptById" resultMap="MyEmp">
+        select  e.id id, e.name name, e.age age, e.gender gender, e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+               e.nationId nationId, e.nativePlace nativePlace, e.email email, e.phone phone, e.address address,
+               e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,
+               e.workState workState, e.workID workID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate ,d.id did, d.name deptname, p.id pid, p.name posname
+            from emp e,dept d,position p where e.deptId=d.id and e.posId=p.id and e.id=#{id}
+    </select>
+
+    <select id="getEmpAndDept" resultMap="MyEmp">
+        select  e.id id, e.name name, e.age age, e.gender gender, e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+                e.nationId nationId, e.nativePlace nativePlace, e.email email, e.phone phone, e.address address,
+                e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,
+                e.workState workState, e.workID workID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate, d.id did, d.name deptname,p.id pid, p.name posname
+        from emp e,dept d,position p where e.deptId=d.id and e.posId=p.id order by id
+    </select>
+
+    <select id="getEmpByWorkID" resultType="com.xtu.hrms.bean.Emp">
+        select * from emp where workID=#{workID}
+    </select>
+
+    <select id="getAllEmps" resultType="com.xtu.hrms.bean.Emp">
+        select * from emp
+    </select>
+
+    <delete id="deleteEmpById">
+        delete from emp where id=#{id}
+    </delete>
+
+    <insert id="addEmp" parameterType="com.xtu.hrms.bean.Emp">
+        insert into emp (id, name, age, gender, birthday, IDCard, wedlock, nationId,
+                         nativePlace, email, phone, address, deptId, posId,
+                         degree, school, edate, workState, workID, conversionTime,workAge,notWorkDate
+                        )
+        values (#{id}, #{name}, #{age}, #{gender},
+                #{birthday}, #{IDCard}, #{wedlock},
+                #{nationId},#{nativePlace}, #{email},
+                #{phone}, #{address}, #{deptId},
+                #{posId},#{degree}, #{school},
+                #{edate},#{workState}, #{workID},
+                #{conversionTime},#{workAge},#{notWorkDate}
+               )
+    </insert>
+
+    <update id="updateEmp" parameterType="com.xtu.hrms.bean.Emp">
+        update emp
+        set name = #{name},
+            gender = #{gender},
+            age = #{age},
+            birthday = #{birthday},
+            IDCard = #{IDCard},
+            wedlock = #{wedlock},
+            nationId = #{nationId},
+            nativePlace = #{nativePlace},
+            email = #{email},
+            phone = #{phone},
+            address = #{address},
+            deptId = #{deptId},
+            posId = #{posId},
+            degree = #{degree},
+            school = #{school},
+            edate = #{edate},
+            workState = #{workState},
+            workID = #{workID},
+            conversionTime = #{conversionTime},
+            workAge = #{workAge},
+            notWorkDate = #{notWorkDate}
+        where id = #{id}
+    </update>
+
+    <select id="query" resultMap="MyEmp">
+        select  e.id id, e.name name, e.age age, e.gender gender, e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+        e.nationId nationId, e.nativePlace nativePlace, e.email email, e.phone phone, e.address address,
+        e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,
+        e.workState workState, e.workID workID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate, d.id did, d.name deptname,p.id pid, p.name posname
+        from emp e,dept d,position p where e.deptId=d.id and e.posId=p.id and e.name = #{name}
+    </select>
+</mapper>

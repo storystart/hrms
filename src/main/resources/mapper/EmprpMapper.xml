@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtu.hrms.mapper.EmprpMapper">
+    <resultMap id="MyEmprp" type="com.xtu.hrms.bean.Emprp">
+        <id column="id" property="id"/>
+        <result column="eid" property="eid"/>
+        <result column="rpDate" property="rpDate"/>
+        <result column="rpType" property="rpType"/>
+        <result column="rpReason" property="rpReason"/>
+        <result column="rpPoint" property="rpPoint"/>
+        <result column="remark" property="remark"/>
+
+        <association property="emp" javaType="com.xtu.hrms.bean.Emp">
+            <id column="e_id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="age" property="age"/>
+            <result column="gender" property="gender"/>
+            <result column="birthday" property="birthday"/>
+            <result column="IDCard" property="IDCard"/>
+            <result column="wedlock" property="wedlock"/>
+            <result column="nationId" property="nationId"/>
+            <result column="nativePlace" property="nativePlace"/>
+            <result column="email" property="email"/>
+            <result column="phone" property="phone"/>
+            <result column="address" property="address"/>
+            <result column="deptId" property="deptId"/>
+            <result column="posId" property="posId"/>
+            <result column="degree" property="degree"/>
+            <result column="school" property="school"/>
+            <result column="edate" property="edate"/>
+            <result column="workState" property="workState"/>
+            <result column="eworkID" property="workID"/>
+            <result column="conversionTime" property="conversionTime"/>
+            <result column="workAge" property="workAge"/>
+            <result column="notWorkDate" property="notWorkDate"/>
+        </association>
+    </resultMap>
+
+    <select id="getEmprpById" resultType="com.xtu.hrms.bean.Emprp">
+        select * from emprp where id=#{id}
+    </select>
+
+    <select id="getEmprpAndEmp" resultMap="MyEmprp">
+        select rp.id id, rp.eid eid,rp.rpDate rpDate,rp.rpType rpType,rp.rpReason rpReason,rp.rpPoint rpPoint,rp.remark remark,
+               e.id e_id, e.name name, e.gender gender,e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+               e.nationId nationId, e.nativePlace nativePlace, e.email email,e.phone phone, e.address address,
+               e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,e.workState workState,
+               e.workID eworkID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate
+        from emprp rp,emp e where rp.eid = e.id
+    </select>
+
+    <select id="getAllEmprps" resultType="com.xtu.hrms.bean.Emprp">
+        select * from emprp
+    </select>
+
+    <delete id="deleteEmprpById">
+        delete from emprp where id=#{id}
+    </delete>
+
+    <insert id="addEmprp" parameterType="com.xtu.hrms.bean.Emprp">
+        insert into emprp (id, eid, rpDate, rpType, rpReason,rpPoint,remark)
+        values (#{id}, #{eid}, #{rpDate},#{rpType}, #{rpReason},#{rpPoint},#{remark}
+               )
+    </insert>
+
+    <update id="updateEmprp" parameterType="com.xtu.hrms.bean.Emprp">
+        update emprp
+        set rpDate = #{rpDate},
+            rpType = #{rpType},
+            rpReason = #{rpReason},
+            rpPoint = #{rpPoint},
+            remark = #{remark}
+        where id = #{id} and eid = #{eid}
+    </update>
+
+    <select id="query" resultMap="MyEmprp">
+        select rp.id id, rp.eid eid,rp.rpDate rpDate,rp.rpType rpType,rp.rpReason rpReason,rp.rpPoint rpPoint,rp.remark remark,
+               e.id e_id, e.name name, e.gender gender,e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+               e.nationId nationId, e.nativePlace nativePlace, e.email email,e.phone phone, e.address address,
+               e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,e.workState workState,
+               e.workID eworkID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate
+        from emprp rp,emp e where rp.eid = e.id and e.name = #{name}
+    </select>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtu.hrms.mapper.EmpsalaryMapper">
+    <resultMap id="MyEmpsalary" type="com.xtu.hrms.bean.Empsalary">
+        <id column="id" property="id"/>
+        <result column="sal" property="sal"/>
+        <association property="emp" javaType="com.xtu.hrms.bean.Emp">
+            <id column="e_id" property="id"/>
+            <result column="ename" property="name"/>
+        </association>
+
+        <association property="salary" javaType="com.xtu.hrms.bean.Salary">
+            <id column="s_id" property="id"/>
+            <result column="sname" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="getEmpsalaryById" resultType="com.xtu.hrms.bean.Empsalary">
+        select * from empsalary where id=#{id}
+    </select>
+
+    <select id="getAll" resultMap="MyEmpsalary">
+        select es.id id,es.eid eid,es.sid sid,es.sal sal,e.id e_id, e.name ename, e.gender gender, e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+               e.nationId nationId, e.nativePlace nativePlace, e.email email, e.phone phone, e.address address,
+               e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,
+               e.workState workState, e.workID workID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate, s.id s_id,s.basicSalary basicSalary, s.bonus bonus, s.lunchSalary lunchSalary,
+               s.trafficSalary trafficSalary,s.allSalary allSalary,s.pensionBase pensionBase,s.pensionPer pensionPer,s.medicalBase medicalBase,
+               s.medicalPer medicalPer,s.accumulationFundBase accumulationBase,s.accumulationFundPer accumulationPer,s.name sname
+            from empsalary es,emp e, salary s where es.eid=e.id and es.sid = s.id
+    </select>
+
+    <select id="getAllEmpsalarys" resultType="com.xtu.hrms.bean.Empsalary">
+        select * from empsalary
+    </select>
+
+    <delete id="deleteEmpsalaryById">
+        delete from empsalary where id=#{id}
+    </delete>
+
+    <insert id="addEmpsalary" parameterType="com.xtu.hrms.bean.Empsalary">
+        insert into empsalary (id, eid, sid,sal)
+        values (#{id}, #{eid},#{sid},#{sal})
+    </insert>
+
+    <update id="updateEmpsalary" parameterType="com.xtu.hrms.bean.Empsalary">
+        update empsalary
+        set eid = #{eid},
+            sid = #{sid},
+            sal = #{sal}
+        where id = #{id}
+    </update>
+
+    <select id="query" resultMap="MyEmpsalary">
+        select es.id id,es.eid eid,es.sid sid,es.sal sal,e.id e_id, e.name ename, e.gender gender, e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,
+               e.nationId nationId, e.nativePlace nativePlace, e.email email, e.phone phone, e.address address,
+               e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,
+               e.workState workState, e.workID workID,e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate, s.id s_id,s.basicSalary basicSalary, s.bonus bonus, s.lunchSalary lunchSalary,
+               s.trafficSalary trafficSalary,s.allSalary allSalary,s.pensionBase pensionBase,s.pensionPer pensionPer,s.medicalBase medicalBase,
+               s.medicalPer medicalPer,s.accumulationFundBase accumulationBase,s.accumulationFundPer accumulationPer,s.name sname
+        from empsalary es,emp e, salary s where es.eid=e.id and es.sid = s.id and e.name = #{name}
+    </select>
+</mapper>

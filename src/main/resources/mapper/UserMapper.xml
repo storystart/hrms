@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtu.hrms.mapper.UserMapper">
+    <select id="login" resultType="com.xtu.hrms.bean.User">
+        select * from user where username = #{username} and password = #{password} and enabled = 1
+    </select>
+
+    <select id="getUserById" resultType="com.xtu.hrms.bean.User">
+        select * from user where id=#{id}
+    </select>
+
+    <select id="getAllUsers" resultType="com.xtu.hrms.bean.User">
+        select * from user
+    </select>
+
+    <delete id="deleteUserById">
+        delete from user where id=#{id}
+    </delete>
+
+    <insert id="addUser" parameterType="com.xtu.hrms.bean.User">
+        insert into user (id, username, password)
+        values (#{id},#{username},#{password})
+    </insert>
+
+    <update id="updateUser" parameterType="com.xtu.hrms.bean.User">
+        update user
+        set username = #{username},
+            password = #{password}
+        where id = #{id}
+    </update>
+</mapper>

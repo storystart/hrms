@@ -1,0 +1,86 @@
+{
+  "id": "1801434",
+  "name": "hrms",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10318793",
+      "name": "search",
+      "font_class": "-search1",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "4149156",
+      "name": "transfer",
+      "font_class": "transfer",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "9201345",
+      "name": "奖惩",
+      "font_class": "jiangcheng",
+      "unicode": "e9a0",
+      "unicode_decimal": 59808
+    },
+    {
+      "icon_id": "12876443",
+      "name": "training",
+      "font_class": "training",
+      "unicode": "e6b3",
+      "unicode_decimal": 59059
+    },
+    {
+      "icon_id": "926942",
+      "name": "home",
+      "font_class": "home",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "1446461",
+      "name": "login_user",
+      "font_class": "login_user",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "7365383",
+      "name": "Salary",
+      "font_class": "xinzi",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "8141816",
+      "name": "contract",
+      "font_class": "contract",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "8568936",
+      "name": "绩效评估",
+      "font_class": "jixiaopinggu",
+      "unicode": "e75e",
+      "unicode_decimal": 59230
+    },
+    {
+      "icon_id": "10833493",
+      "name": "employee",
+      "font_class": "employee",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "11059193",
+      "name": "用户 管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e769",
+      "unicode_decimal": 59241
+    }
+  ]
+}

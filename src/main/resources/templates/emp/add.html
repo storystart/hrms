@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>后台管理</title>
+		<!-- Bootstrap core CSS -->
+		<link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+
+		<!-- Custom styles for this template -->
+		<link href="asserts/css/dashboard.css" th:href="@{/asserts/css/dashboard.css}" rel="stylesheet">
+		<link href="iconfont/iconfont.css" th:href="@{/iconfont/iconfont.css}" rel="stylesheet">
+		<style type="text/css">
+			/* Chart.js */
+			
+			@-webkit-keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+			
+			@keyframes chartjs-render-animation {
+				from {
+					opacity: 0.99
+				}
+				to {
+					opacity: 1
+				}
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<!--引入抽取的topbar-->
+		<!--模板名：会使用thymeleaf的前后缀配置规则进行解析-->
+		<div th:replace="commons/bar::topbar"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<!--引入侧边栏-->
+				<div th:replace="commons/bar::#sidebar(activeUri='emps')"></div>
+
+				<main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+					<!--需要区分是员工修改还是添加；-->
+					<form th:action="@{/emp}" method="post">
+						<!--发送put请求修改员工数据-->
+						<!--
+						1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+						2、页面创建一个post表单
+						3、创建一个input项，name="_method";值就是我们指定的请求方式
+						-->
+						<input type="hidden" name="_method" value="put" th:if="${emp!=null}"/>
+						<input type="hidden" name="id" th:if="${emp!=null}" th:value="${emp.id}">
+						<div class="form-group">
+							<label>姓名</label>
+							<input name="name" type="text" class="form-control" placeholder="zhangsan" th:value="${emp!=null}?${emp.name}">
+						</div>
+						<div class="form-group">
+							<label>性别</label><br/>
+                            <label>
+                                <select class="form-control" name="gender">
+                                    <option th:text="男"></option>
+                                    <option th:text="女"></option>
+                                </select>
+                            </label>
+                        </div>
+						<div class="form-group">
+							<label>年龄</label><br/>
+							<input name="age" id="age" type="text" class="form-control" placeholder="35" th:value="${emp!=null}?${emp.age}">
+						</div>
+						<div class="form-group">
+							<label>生日</label>
+							<input name="birthday" type="text" class="form-control" placeholder="1999-02-15" th:value="${emp!=null}?${#dates.format(emp.birthday, 'yyyy-MM-dd')}">
+						</div>
+						<div class="form-group">
+							<label>身份证号</label>
+							<input name="IDCard" id="IDCard" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${emp.IDCard}">
+						</div>
+						<div class="form-group">
+							<label>婚姻状况</label>
+							<select class="form-control" name="wedlock">
+								<option th:text="已婚"></option>
+								<option th:text="未婚"></option>
+								<option th:text="离异"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>民族</label>
+							<!--提交的是民族的id-->
+							<select class="form-control" name="nationId">
+								<option th:selected="${emp!=null}?${nation.id == emp.nationId}" th:value="${nation.id}" th:each="nation:${nations}" th:text="${nation.name}"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>籍贯</label>
+							<input name="nativePlace" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${emp.nativePlace}">
+						</div>
+						<div class="form-group">
+							<label>邮箱</label>
+							<input name="email" type="email" class="form-control" placeholder="zhangsan@163.com" th:value="${emp!=null}?${emp.email}">
+						</div>
+						<div class="form-group">
+							<label>联系电话</label>
+							<input name="phone" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${emp.phone}">
+						</div>
+						<div class="form-group">
+							<label>联系地址</label>
+							<input name="address" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${emp.address}">
+						</div>
+						<div class="form-group">
+							<label>所属部门</label>
+							<!--提交的是部门的id-->
+							<select class="form-control" name="deptId">
+								<option th:selected="${emp!=null}?${dept.id == emp.deptId}" th:value="${dept.id}" th:each="dept:${depts}" th:text="${dept.name}"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>职位</label>
+							<!--提交的是职位的id-->
+							<select class="form-control" name="posId">
+								<option th:selected="${emp!=null}?${position.id == emp.posId}" th:value="${position.id}" th:each="position:${positions}" th:text="${position.name}"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>学历</label>
+							<select class="form-control" name="degree">
+								<option th:text="博士"></option>
+								<option th:text="硕士"></option>
+								<option th:text="本科"></option>
+								<option th:text="大专"></option>
+								<option th:text="高中"></option>
+								<option th:text="初中"></option>
+								<option th:text="小学"></option>
+								<option th:text="其他"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>毕业院校</label>
+							<input name="school" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${emp.school}">
+						</div>
+						<div class="form-group">
+							<label>入职日期</label>
+							<input name="edate" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${#dates.format(emp.edate, 'yyyy-MM-dd')}">
+						</div>
+						<div class="form-group">
+							<label>在职状态</label>
+							<select class="form-control" name="workState">
+								<option th:text="在职"></option>
+								<option th:text="离职"></option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>工号</label>
+							<input name="workID" type="text" class="form-control" placeholder="必填" th:value="${emp!=null}?${emp.workID}">
+						</div>
+						<div class="form-group">
+							<label>转正日期</label>
+							<input name="conversionTime" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${#dates.format(emp.conversionTime, 'yyyy-MM-dd')}">
+						</div>
+						<div class="form-group">
+							<label>工龄</label>
+							<input name="workAge" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${emp.workAge}">
+						</div>
+						<div class="form-group">
+							<label>离职日期</label>
+							<input name="notWorkDate" type="text" class="form-control" placeholder="" th:value="${emp!=null}?${#dates.format(emp.notWorkDate, 'yyyy-MM-dd')}">
+						</div>
+						<button type="submit" class="btn btn-primary" th:text="${emp!=null}?'修改':'添加'">添加</button>
+					</form>
+				</main>
+			</div>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.5.0/jquery.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/dist/popper.js}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.1-1/js/bootstrap.js}"></script>
+	</body>
+
+</html>

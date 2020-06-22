@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtu.hrms.mapper.SalaryMapper">
+    <select id="getSalaryById" resultType="com.xtu.hrms.bean.Salary">
+        select * from salary where id=#{id}
+    </select>
+
+    <select id="getAllSalarys" resultType="com.xtu.hrms.bean.Salary">
+        select * from salary
+    </select>
+
+    <delete id="deleteSalaryById">
+        delete from salary where id=#{id}
+    </delete>
+
+    <insert id="addSalary" parameterType="com.xtu.hrms.bean.Salary">
+        insert into salary (id, basicSalary, bonus, lunchSalary, trafficSalary,
+                            allSalary, pensionBase, pensionPer, medicalBase, medicalPer,
+                            accumulationFundBase, accumulationFundPer,name)
+        values (#{id}, #{basicSalary},#{bonus},
+                #{lunchSalary}, #{trafficSalary},#{allSalary},
+                #{pensionBase},#{pensionPer},#{medicalBase},
+                #{medicalPer},#{accumulationFundBase},
+                #{accumulationFundPer},#{name})
+    </insert>
+
+    <update id="updateEmpsalary" parameterType="com.xtu.hrms.bean.Empsalary">
+        update salary
+        set basicSalary = #{basicSalary},
+            bonus = #{bonus},
+            lunchSalary = #{lunchSalary},
+            trafficSalary = #{trafficSalary},
+            allSalary = #{allSalary},
+            pensionBase = #{pensionBase},
+            pensionPer = #{pensionPer},
+            medicalBase = #{medicalBase},
+            medicalPer = #{medicalPer},
+            accumulationFundBase = #{accumulationFundBase},
+            accumulationFundPer = #{accumulationFundPer},
+            name = #{name}
+        where id = #{id}
+    </update>
+</mapper>

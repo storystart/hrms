@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="iconfont/iconfont.css" th:href="@{/iconfont/iconfont.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.css}" rel="stylesheet">
+    <style>
+        .iconfont{
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<!--topbar-->
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0" th:fragment="topbar">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">[[${session.loginUser}]]</a>
+<!--    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">-->
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="#" th:href="@{/user/logout}">退出</a>
+        </li>
+    </ul>
+</nav>
+
+<!--sidebar-->
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" id="sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column side-menu">
+            <li class="nav-item">
+                <a class="nav-link active"
+                   th:class="${activeUri=='main.html'?'nav-link active':'nav-link'}"
+                   href="#" th:href="@{/main.html}">
+                    <span class="iconfont icon-home"></span>
+                    主页 <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#" th:href="@{/emps}"
+                       th:class="${activeUri=='emps'?'nav-link active':'nav-link'}">
+                <span class="iconfont icon-employee"></span>
+                员工管理
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/emprps}"
+                   th:class="${activeUri=='emprps'?'nav-link active':'nav-link'}">
+                    <span class="iconfont icon-jiangcheng"></span>
+                    奖惩管理
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/contracts}"
+                   th:class="${activeUri=='contracts'?'nav-link active':'nav-link'}">
+                    <span class="iconfont icon-contract"></span>
+                    合同管理
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/salarys}"
+                   th:class="${activeUri=='salarys'?'nav-link active':'nav-link'}">
+                    <span class="iconfont icon-xinzi"></span>
+                    薪酬管理
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/trains}"
+                   th:class="${activeUri=='trains'?'nav-link active':'nav-link'}">
+                    <span class="iconfont icon-training"></span>
+                    培训管理
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/appraises}"
+                   th:class="${activeUri=='appraises'?'nav-link active':'nav-link'}">
+                    <span class="iconfont icon-jixiaopinggu"></span>
+                    绩效评估
+                </a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/users}"-->
+<!--                   th:class="${activeUri=='users'?'nav-link active':'nav-link'}">-->
+<!--                    <span class="iconfont icon-yonghuguanli"></span>-->
+<!--                    用户管理-->
+<!--                </a>-->
+<!--            </li>-->
+
+        </ul>
+    </div>
+
+</nav>
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.5.0/jquery.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.js}"></script>
+</body>
+</html>

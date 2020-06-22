@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xtu.hrms.mapper.ContractMapper">
+    <resultMap id="MyContract" type="com.xtu.hrms.bean.Contract">
+        <id column="id" property="id"/>
+        <result column="workID" property="workID"/>
+        <result column="contractTerm" property="contractTerm"/>
+        <result column="beginContract" property="beginContract"/>
+        <result column="endContract" property="endContract"/>
+        <result column="contractContent" property="contractContent"/>
+
+        <association property="emp" javaType="com.xtu.hrms.bean.Emp">
+            <id column="eid" property="id"/>
+            <result column="name" property="name"/>
+            <result column="age" property="age"/>
+            <result column="gender" property="gender"/>
+            <result column="birthday" property="birthday"/>
+            <result column="IDCard" property="IDCard"/>
+            <result column="wedlock" property="wedlock"/>
+            <result column="nationId" property="nationId"/>
+            <result column="nativePlace" property="nativePlace"/>
+            <result column="email" property="email"/>
+            <result column="phone" property="phone"/>
+            <result column="address" property="address"/>
+            <result column="deptId" property="deptId"/>
+            <result column="posId" property="posId"/>
+            <result column="degree" property="degree"/>
+            <result column="school" property="school"/>
+            <result column="edate" property="edate"/>
+            <result column="workState" property="workState"/>
+            <result column="eworkID" property="workID"/>
+            <result column="conversionTime" property="conversionTime"/>
+            <result column="workAge" property="workAge"/>
+            <result column="notWorkDate" property="notWorkDate"/>
+        </association>
+    </resultMap>
+
+    <select id="getContractById" resultType="com.xtu.hrms.bean.Contract">
+        select * from contract where id=#{id}
+    </select>
+
+    <select id="getContractAndEmp" resultMap="MyContract">
+        select c.id id, c.workID workID,c.contractTerm contractTerm,c.beginContract beginContract,c.endContract endContract,c.contractContent contractContent,e.id eid,
+               e.name name, e.gender gender,e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,e.nationId nationId, e.nativePlace nativePlace, e.email email,
+               e.phone phone, e.address address,e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,e.workState workState, e.workID eworkID,
+               e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate
+        from contract c,emp e where c.workID = e.workID
+    </select>
+
+    <select id="getAllContracts" resultType="com.xtu.hrms.bean.Contract">
+        select * from contract
+    </select>
+
+    <delete id="deleteContractById">
+        delete from contract where id=#{id}
+    </delete>
+
+    <insert id="addContract" parameterType="com.xtu.hrms.bean.Contract">
+        insert into contract (id, workID, contractTerm,
+                         beginContract, endContract, contractContent
+        )
+        values (#{id}, #{workID}, #{contractTerm},
+               #{beginContract},#{endContract},#{contractContent}
+               )
+    </insert>
+
+    <update id="updateContract" parameterType="com.xtu.hrms.bean.Contract">
+        update contract
+        set contractTerm = #{contractTerm},
+            beginContract = #{beginContract},
+            endContract = #{endContract},
+            contractContent = #{contractContent}
+        where id = #{id} and workID = #{workID}
+    </update>
+
+    <select id="query" resultMap="MyContract">
+        select c.id id, c.workID workID,c.contractTerm contractTerm,c.beginContract beginContract,c.endContract endContract,c.contractContent contractContent,e.id eid,
+               e.name name, e.gender gender,e.birthday birthday, e.IDCard IDCard, e.wedlock wedlock,e.nationId nationId, e.nativePlace nativePlace, e.email email,
+               e.phone phone, e.address address,e.deptId deptId, e.posId posId, e.degree degree,e.school school, e.edate edate,e.workState workState, e.workID eworkID,
+               e.conversionTime conversionTime,e.workAge workAge,e.notWorkDate notWorkDate
+        from contract c,emp e where c.workID = e.workID and e.name = #{name}
+    </select>
+</mapper>
